@@ -1,0 +1,36 @@
+export const personal = {
+  name: "Dikshant Athawale",
+  fullName: "Dikshant Ramesh Athawale",
+  initials: "DA",
+  role: "Backend Developer",
+  tagline: "Backend Developer | Node.js, Express.js, React, SQL",
+  heroHeading: "Hi, I'm Dikshant Athawale",
+  heroSubtitle: "Backend Developer crafting scalable APIs and full-stack web applications",
+  heroIntro:
+    "I specialize in designing clean backend architectures, RESTful APIs, database systems, and modern web applications.",
+  location: "Amravati, India",
+  email: "dikshant.r.athawale@gmail.com",
+  phone: "+91-7719876877",
+  linkedin: "https://linkedin.com/in/dikshant-athawale-374763213",
+  github: "https://github.com/DIkshant-Athawale",
+  resumeUrl: "/resume.pdf",
+  typingRoles: [
+    "Backend Developer",
+    "API Architect",
+    "Full-Stack Builder",
+    "Problem Solver",
+    "System Designer",
+  ],
+  about: `Backend-focused developer with hands-on experience designing and building RESTful APIs and full-stack web applications using Node.js, Express.js, and React. Strong foundation in Data Structures, OOP, Computer Networks, Operating Systems, and relational database design. Skilled in MySQL schema design, query optimization, and Docker fundamentals. A quick learner who thrives in collaborative engineering environments and values clean, maintainable code.`,
+  terminalInfo: [
+    { cmd: "whoami", output: "Dikshant Athawale" },
+    { cmd: "cat role.txt", output: "Backend Developer & CS Engineering Student" },
+    { cmd: "cat location.txt", output: "Amravati, India" },
+    {
+      cmd: "ls skills/",
+      output: "node.js  express.js  react  typescript  mysql  docker  git",
+    },
+    { cmd: "cat interests.txt", output: "Clean Architecture • Scalable APIs • Open Source • Problem Solving" },
+    { cmd: "cat status.txt", output: "Open to opportunities 🚀" },
+  ],
+};

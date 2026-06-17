@@ -1,0 +1,82 @@
+"use client";
+
+import { motion } from "framer-motion";
+import type { EducationItem } from "@/data/education";
+
+interface TimelineItemProps {
+  item: EducationItem;
+  index: number;
+  isLast: boolean;
+}
+
+export default function TimelineItem({ item, index, isLast }: TimelineItemProps) {
+  const Icon = item.icon;
+  const isLeft = index % 2 === 0;
+
+  return (
+    <div className="relative flex items-center justify-center">
+      {/* Timeline line */}
+      {!isLast && (
+        <motion.div
+          initial={{ height: 0 }}
+          whileInView={{ height: "100%" }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="absolute left-1/2 top-[60px] w-[2px] bg-gradient-to-b from-indigo-500/40 to-transparent -translate-x-1/2 z-0"
+          style={{ height: "calc(100% + 2rem)" }}
+        />
+      )}
+
+      {/* Content row */}
+      <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-4 md:gap-8 w-full items-center">
+        {/* Left content */}
+        <motion.div
+          initial={{ opacity: 0, x: isLeft ? -40 : 40 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className={`${isLeft ? "" : "md:order-3"} ${isLeft ? "md:text-right" : "md:text-left"}`}
+        >
+          <div className={`p-5 rounded-2xl border border-white/[0.08] bg-card-bg backdrop-blur-sm ${isLeft ? "md:ml-auto" : "md:mr-auto"} max-w-md`}>
+            <span
+              className="text-xs font-bold uppercase tracking-wider"
+              style={{ color: item.color }}
+            >
+              {item.year}
+            </span>
+            <h3 className="font-heading font-bold text-primary text-lg mt-2">
+              {item.degree}
+            </h3>
+            <p className="text-secondary text-sm mt-1">{item.institution}</p>
+            {item.university && (
+              <p className="text-white/30 text-xs mt-1">{item.university}</p>
+            )}
+          </div>
+        </motion.div>
+
+        {/* Center dot */}
+        <motion.div
+          initial={{ scale: 0 }}
+          whileInView={{ scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4, delay: 0.1, type: "spring" }}
+          className="relative z-10 hidden md:flex items-center justify-center"
+        >
+          <div
+            className="w-12 h-12 rounded-full flex items-center justify-center border-2 bg-[#0a0a0f]"
+            style={{ borderColor: item.color }}
+          >
+            <Icon size={20} style={{ color: item.color }} />
+          </div>
+          <div
+            className="absolute w-12 h-12 rounded-full animate-ping opacity-20"
+            style={{ backgroundColor: item.color }}
+          />
+        </motion.div>
+
+        {/* Right spacer (empty on alternating sides) */}
+        <div className={`hidden md:block ${isLeft ? "md:order-3" : ""}`} />
+      </div>
+    </div>
+  );
+}

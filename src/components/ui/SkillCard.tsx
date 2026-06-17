@@ -1,0 +1,70 @@
+"use client";
+
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
+import type { SkillCategory } from "@/data/skills";
+
+interface SkillCardProps {
+  category: SkillCategory;
+  index: number;
+}
+
+export default function SkillCard({ category, index }: SkillCardProps) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
+  const Icon = category.icon;
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      whileHover={{ y: -5, transition: { duration: 0.2 } }}
+      className="group relative p-6 rounded-2xl border border-white/[0.08] bg-card-bg backdrop-blur-sm hover:border-white/[0.15] transition-all duration-300"
+    >
+      {/* Glow effect on hover */}
+      <div
+        className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 blur-xl"
+        style={{ backgroundColor: `${category.color}15` }}
+      />
+
+      {/* Header */}
+      <div className="flex items-center gap-3 mb-6">
+        <div
+          className="p-2.5 rounded-xl"
+          style={{ backgroundColor: `${category.color}15` }}
+        >
+          <Icon size={22} style={{ color: category.color }} />
+        </div>
+        <h3 className="font-heading font-semibold text-primary text-lg">
+          {category.title}
+        </h3>
+      </div>
+
+      {/* Skills with progress bars */}
+      <div className="space-y-4">
+        {category.skills.map((skill, i) => (
+          <div key={skill.name}>
+            <div className="flex justify-between mb-1.5">
+              <span className="text-sm text-secondary">{skill.name}</span>
+              <span className="text-xs text-white/30">{skill.level}%</span>
+            </div>
+            <div className="h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
+              <motion.div
+                initial={{ width: 0 }}
+                animate={isInView ? { width: `${skill.level}%` } : { width: 0 }}
+                transition={{ duration: 1, delay: 0.3 + i * 0.1, ease: "easeOut" }}
+                className="h-full rounded-full"
+                style={{
+                  background: `linear-gradient(90deg, ${category.color}, ${category.color}88)`,
+                }}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    </motion.div>
+  );
+}
