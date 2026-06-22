@@ -21,7 +21,6 @@ export default function Certifications() {
 
         {/* Activities */}
         <div className="reveal max-w-2xl mx-auto">
-        >
           <h3 className="font-heading font-semibold text-primary text-lg sm:text-xl text-center mb-7 sm:mb-10 pt-8 md:pt-12 border-t border-white/[0.06]">
             Extra-Curricular Activities
           </h3>

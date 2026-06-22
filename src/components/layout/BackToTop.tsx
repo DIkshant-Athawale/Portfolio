@@ -7,11 +7,24 @@ export default function BackToTop() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    let frame = 0;
+
     const handleScroll = () => {
-      setIsVisible(window.scrollY > 500);
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        const nextVisible = window.scrollY > 500;
+        setIsVisible((current) =>
+          current === nextVisible ? current : nextVisible
+        );
+      });
     };
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
   }, []);
 
   const scrollToTop = () => {

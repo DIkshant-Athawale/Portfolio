@@ -63,7 +63,7 @@ export default function SkillCard({ category, index }: SkillCardProps) {
                   className="absolute inset-0 rounded-full"
                   style={{
                     background: `linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%)`,
-                    animation: "shimmer 2s ease-in-out infinite",
+                    animation: "shimmer 2s ease-in-out 2",
                     animationDelay: `${i * 0.2}s`,
                   }}
                 />

@@ -3,13 +3,15 @@ import path from "node:path";
 
 const RESUME_FILE = "Dikshant_Athawale_Resume_FullStack.pdf";
 const DOWNLOAD_NAME = "Dikshant_Athawale_Resume.pdf";
+const resumePath = path.join(process.cwd(), RESUME_FILE);
+let resumePromise: Promise<Buffer> | null = null;
 
 export const runtime = "nodejs";
 
 export async function GET() {
   try {
-    const resumePath = path.join(process.cwd(), RESUME_FILE);
-    const resume = await readFile(resumePath);
+    resumePromise ??= readFile(resumePath);
+    const resume = await resumePromise;
 
     if (resume.byteLength === 0) {
       throw new Error("Resume file is empty");
@@ -26,6 +28,7 @@ export async function GET() {
       },
     });
   } catch {
+    resumePromise = null;
     return Response.json(
       {
         error:

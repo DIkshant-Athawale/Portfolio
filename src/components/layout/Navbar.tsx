@@ -21,11 +21,24 @@ export default function Navbar() {
   const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
+    let frame = 0;
+
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        const nextScrolled = window.scrollY > 50;
+        setIsScrolled((current) =>
+          current === nextScrolled ? current : nextScrolled
+        );
+      });
     };
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (frame) cancelAnimationFrame(frame);
+    };
   }, []);
 
   // Close mobile menu on Escape key
@@ -158,6 +171,7 @@ export default function Navbar() {
             role="dialog"
             aria-modal={mobileOpen}
             aria-hidden={!mobileOpen}
+            inert={!mobileOpen}
             aria-label="Mobile navigation"
           >
             <div

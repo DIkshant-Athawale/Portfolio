@@ -1,45 +1,57 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 interface TypingAnimationProps {
   words: string[];
   className?: string;
 }
 
-export default function TypingAnimation({ words, className = "" }: TypingAnimationProps) {
+export default function TypingAnimation({
+  words,
+  className = "",
+}: TypingAnimationProps) {
   const [wordIndex, setWordIndex] = useState(0);
   const [text, setText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isPageVisible, setIsPageVisible] = useState(true);
 
   useEffect(() => {
+    const handleVisibility = () => setIsPageVisible(!document.hidden);
+    handleVisibility();
+    document.addEventListener("visibilitychange", handleVisibility);
+    return () =>
+      document.removeEventListener("visibilitychange", handleVisibility);
+  }, []);
+
+  useEffect(() => {
+    if (!isPageVisible) return;
+
     const currentWord = words[wordIndex];
-    let timeoutId: ReturnType<typeof setTimeout>;
+    const isComplete = !isDeleting && text === currentWord;
+    const delay = isComplete ? 2000 : isDeleting ? 50 : 100;
 
-    if (!isDeleting) {
-      const nextText = currentWord.slice(0, text.length + 1);
-      const isComplete = nextText.length === currentWord.length;
+    const timeoutId = setTimeout(() => {
+      if (isComplete) {
+        setIsDeleting(true);
+        return;
+      }
 
-      timeoutId = setTimeout(() => {
-        setText(nextText);
-        if (isComplete) {
-          // Pause before deleting — use a single chained timeout
-          timeoutId = setTimeout(() => setIsDeleting(true), 2000);
-        }
-      }, 100);
-    } else {
-      const nextText = currentWord.slice(0, text.length - 1);
-      timeoutId = setTimeout(() => {
+      if (isDeleting) {
+        const nextText = currentWord.slice(0, Math.max(0, text.length - 1));
         setText(nextText);
         if (nextText.length === 0) {
           setIsDeleting(false);
-          setWordIndex((prev) => (prev + 1) % words.length);
+          setWordIndex((previous) => (previous + 1) % words.length);
         }
-      }, 50);
-    }
+        return;
+      }
+
+      setText(currentWord.slice(0, text.length + 1));
+    }, delay);
 
     return () => clearTimeout(timeoutId);
-  }, [text, isDeleting, wordIndex, words]);
+  }, [isDeleting, isPageVisible, text, wordIndex, words]);
 
   return (
     <span className={className}>
