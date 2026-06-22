@@ -4,13 +4,13 @@ import { useEffect } from "react";
 
 export default function RevealObserver() {
   useEffect(() => {
-    const elements = document.querySelectorAll<HTMLElement>(".reveal");
-
     if (
       window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
       !("IntersectionObserver" in window)
     ) {
-      elements.forEach((element) => element.classList.add("is-visible"));
+      document
+        .querySelectorAll<HTMLElement>(".reveal")
+        .forEach((element) => element.classList.add("is-visible"));
       return;
     }
 
@@ -25,8 +25,29 @@ export default function RevealObserver() {
       { rootMargin: "0px 0px -8% 0px", threshold: 0.08 }
     );
 
-    elements.forEach((element) => observer.observe(element));
-    return () => observer.disconnect();
+    const observeReveals = (root: ParentNode) => {
+      root
+        .querySelectorAll<HTMLElement>(".reveal:not(.is-visible)")
+        .forEach((element) => observer.observe(element));
+    };
+
+    observeReveals(document);
+
+    const mutationObserver = new MutationObserver((records) => {
+      records.forEach((record) => {
+        record.addedNodes.forEach((node) => {
+          if (!(node instanceof HTMLElement)) return;
+          if (node.matches(".reveal:not(.is-visible)")) observer.observe(node);
+          observeReveals(node);
+        });
+      });
+    });
+
+    mutationObserver.observe(document.body, { childList: true, subtree: true });
+    return () => {
+      mutationObserver.disconnect();
+      observer.disconnect();
+    };
   }, []);
 
   return null;

@@ -1,24 +1,30 @@
 import type { Metadata } from "next";
-import { Inter, Sora, JetBrains_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
-const inter = Inter({
-  subsets: ["latin"],
+const inter = localFont({
+  src: "./fonts/inter-latin-variable.woff2",
   variable: "--font-inter",
   display: "swap",
+  weight: "100 900",
+  fallback: ["Arial", "sans-serif"],
 });
 
-const sora = Sora({
-  subsets: ["latin"],
+const sora = localFont({
+  src: "./fonts/sora-latin-variable.woff2",
   variable: "--font-sora",
   display: "swap",
+  weight: "100 800",
+  fallback: ["Arial", "sans-serif"],
 });
 
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
+const jetbrainsMono = localFont({
+  src: "./fonts/jetbrains-mono-latin-variable.woff2",
   variable: "--font-jetbrains",
   display: "swap",
+  weight: "100 800",
+  fallback: ["Consolas", "monospace"],
 });
 
 export const metadata: Metadata = {
