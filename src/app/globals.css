@@ -1,26 +1,328 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ===== Custom Theme Tokens ===== */
+@theme {
+  --color-accent-primary: #6366f1;
+  --color-accent-secondary: #8b5cf6;
+  --color-accent-cyan: #06b6d4;
+  --font-heading: "Sora", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ===== Dark Mode (Default) ===== */
+:root,
+.dark {
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #111118;
+  --bg-card: rgba(17, 17, 24, 0.6);
+  --bg-nav: rgba(10, 10, 15, 0.8);
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --border-color: rgba(255, 255, 255, 0.06);
+  color-scheme: dark;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ===== Light Mode ===== */
+.light {
+  --bg-primary: #fafbfc;
+  --bg-secondary: #ffffff;
+  --bg-card: rgba(255, 255, 255, 0.8);
+  --bg-nav: rgba(250, 251, 252, 0.85);
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --border-color: rgba(0, 0, 0, 0.08);
+  color-scheme: light;
+}
+
+/* ===== Base Styles ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+  scroll-padding-top: 5rem;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  line-height: 1.7;
+  min-width: 320px;
+  overflow-x: clip;
+  text-wrap: pretty;
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+}
+
+button,
+a,
+input,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+a {
+  touch-action: manipulation;
+}
+
+section[id] {
+  scroll-margin-top: 5rem;
+}
+
+/* ===== Utility Classes ===== */
+@utility text-primary {
+  color: var(--text-primary);
+}
+
+@utility text-secondary {
+  color: var(--text-secondary);
+}
+
+@utility bg-primary {
+  background-color: var(--bg-primary);
+}
+
+@utility bg-secondary {
+  background-color: var(--bg-secondary);
+}
+
+@utility bg-card-bg {
+  background-color: var(--bg-card);
+}
+
+@utility bg-nav-bg {
+  background-color: var(--bg-nav);
+}
+
+@utility border-theme {
+  border-color: var(--border-color);
+}
+
+@utility font-heading {
+  font-family: var(--font-heading);
+}
+
+@utility font-body {
+  font-family: var(--font-body);
+}
+
+@utility font-mono {
+  font-family: var(--font-mono);
+}
+
+@utility text-accent-primary {
+  color: var(--color-accent-primary);
+}
+
+@utility bg-accent-primary {
+  background-color: var(--color-accent-primary);
+}
+
+/* ===== Custom Animations ===== */
+@keyframes pulse-slow {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.05);
+  }
+}
+
+@utility animate-pulse-slow {
+  animation: pulse-slow 6s ease-in-out infinite;
+}
+
+@utility animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+/* ===== Scrollbar ===== */
+@utility scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(99, 102, 241, 0.3) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(99, 102, 241, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(99, 102, 241, 0.5);
+}
+
+/* ===== Selection ===== */
+::selection {
+  background-color: rgba(99, 102, 241, 0.3);
+  color: #f1f5f9;
+}
+
+/* ===== Loading Animation ===== */
+@keyframes code-loading {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@utility animate-code-loading {
+  animation: code-loading 1s linear infinite;
+}
+
+/* ===== Skill Progress Bar Shimmer ===== */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+/* ===== Light mode overrides for UI consistency ===== */
+.light .bg-card-bg {
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+.light input,
+.light textarea {
+  background-color: rgba(0, 0, 0, 0.02) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  color: var(--text-primary) !important;
+}
+
+.light input::placeholder,
+.light textarea::placeholder {
+  color: rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Accent color utilities for hover/focus states - light mode */
+.light .bg-white\/\[0\.06\] {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.light .bg-white\/\[0\.04\] {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.light .bg-white\/\[0\.03\] {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.light .border-white\/\[0\.08\] {
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+.light .border-white\/\[0\.06\] {
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+.light .border-white\/\[0\.12\] {
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.light .border-white\/\[0\.15\] {
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+.light .text-white\/30,
+.light .text-white\/40 {
+  color: rgba(0, 0, 0, 0.35);
+}
+
+.light .text-white\/60 {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.light .text-white\/70 {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.light .text-white\/80 {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.light .hover\:bg-white\/\[0\.04\]:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.light .hover\:bg-white\/\[0\.06\]:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.light .hover\:bg-white\/\[0\.12\]:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+.light .hover\:border-white\/\[0\.15\]:hover {
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+.light .hover\:text-primary:hover {
+  color: var(--text-primary);
+}
+
+/* Light mode gradient orb adjustments */
+.light .bg-indigo-500\/20 {
+  background-color: rgba(99, 102, 241, 0.08);
+}
+
+.light .bg-violet-500\/15 {
+  background-color: rgba(139, 92, 246, 0.06);
+}
+
+@media (hover: none) {
+  .group-hover\:scale-105,
+  .hover\:scale-105 {
+    transform: none;
+  }
+}
+
+@media (pointer: coarse) {
+  button,
+  a {
+    min-height: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

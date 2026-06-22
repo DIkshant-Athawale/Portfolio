@@ -1,5 +1,4 @@
-import { Award } from "lucide-react";
-import { type LucideIcon } from "lucide-react";
+import { Award, type LucideIcon } from "lucide-react";
 
 export interface Certification {
   id: string;
@@ -14,7 +13,7 @@ export const certifications: Certification[] = [
   {
     id: "aws-ai",
     title: "AI Agents: Cognitive Upgrade and Business Efficiency",
-    issuer: "AWS",
+    issuer: "AWS Training & Certification",
     year: "2026",
     icon: Award,
     color: "#f97316",
@@ -30,7 +29,7 @@ export const certifications: Certification[] = [
   {
     id: "coursera-python",
     title: "Python for Everybody",
-    issuer: "University of Michigan, Coursera",
+    issuer: "University of Michigan (Coursera)",
     year: "2024",
     icon: Award,
     color: "#06b6d4",
@@ -38,8 +37,6 @@ export const certifications: Certification[] = [
 ];
 
 export const activities = [
-  "Member of College Technical Club",
-  "Participated in hackathons and tech talks",
-  "Volunteered in college code-a-thon",
-  "Helped junior students with web development and Git",
+  "Member of College Technical Club — participated in hackathons, tech talks, and brainstorming sessions on emerging technologies",
+  "Volunteered in college code-a-thon event — mentored junior students on web development and version control concepts",
 ];

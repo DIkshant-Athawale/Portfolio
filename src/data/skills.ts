@@ -1,12 +1,4 @@
-import {
-  Code2,
-  Layout,
-  Server,
-  Database,
-  Brain,
-  Wrench,
-} from "lucide-react";
-import { type LucideIcon } from "lucide-react";
+import { Code2, Layout, Server, Database, Brain, Wrench, type LucideIcon } from "lucide-react";
 
 export interface Skill {
   name: string;
@@ -22,12 +14,12 @@ export interface SkillCategory {
 
 export const skillCategories: SkillCategory[] = [
   {
-    title: "Programming Languages",
+    title: "Languages",
     icon: Code2,
     color: "#f97316",
     skills: [
       { name: "Java", level: 85 },
-      { name: "JavaScript", level: 90 },
+      { name: "JavaScript (ES6+)", level: 90 },
       { name: "Python", level: 75 },
       { name: "C", level: 70 },
     ],
@@ -37,10 +29,10 @@ export const skillCategories: SkillCategory[] = [
     icon: Layout,
     color: "#06b6d4",
     skills: [
+      { name: "React", level: 85 },
       { name: "HTML5", level: 95 },
       { name: "CSS3", level: 90 },
-      { name: "JavaScript (ES6+)", level: 90 },
-      { name: "React", level: 82 },
+      { name: "TailwindCSS", level: 85 },
     ],
   },
   {
@@ -50,7 +42,8 @@ export const skillCategories: SkillCategory[] = [
     skills: [
       { name: "Node.js", level: 88 },
       { name: "Express.js", level: 88 },
-      { name: "REST API Design", level: 85 },
+      { name: "RESTful API Design", level: 85 },
+      { name: "JWT Authentication", level: 82 },
     ],
   },
   {
@@ -58,8 +51,8 @@ export const skillCategories: SkillCategory[] = [
     icon: Database,
     color: "#10b981",
     skills: [
-      { name: "SQL", level: 85 },
       { name: "MySQL", level: 85 },
+      { name: "SQL", level: 85 },
       { name: "JDBC", level: 70 },
       { name: "Database Design", level: 80 },
       { name: "Query Optimization", level: 75 },
@@ -77,15 +70,13 @@ export const skillCategories: SkillCategory[] = [
     ],
   },
   {
-    title: "Tools",
+    title: "Tools & DevOps",
     icon: Wrench,
     color: "#eab308",
     skills: [
-      { name: "Git", level: 88 },
-      { name: "GitHub", level: 90 },
-      { name: "Docker", level: 65 },
+      { name: "Git & GitHub", level: 90 },
       { name: "VS Code", level: 92 },
-      { name: "Excel", level: 70 },
+      { name: "Docker", level: 65 },
       { name: "Antigravity", level: 80 },
     ],
   },

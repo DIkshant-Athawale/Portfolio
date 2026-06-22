@@ -18,7 +18,7 @@ export default function CertCard({ cert, index }: CertCardProps) {
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
       whileHover={{ y: -4, transition: { duration: 0.2 } }}
-      className="group relative p-6 rounded-2xl border border-white/[0.08] bg-card-bg backdrop-blur-sm hover:border-white/[0.15] transition-all duration-300"
+      className="group relative p-4 sm:p-6 rounded-2xl border border-white/[0.08] bg-card-bg backdrop-blur-sm hover:border-white/[0.15] transition-all duration-300"
     >
       <div
         className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 blur-xl"
@@ -32,8 +32,8 @@ export default function CertCard({ cert, index }: CertCardProps) {
         >
           <Icon size={24} style={{ color: cert.color }} />
         </div>
-        <div>
-          <h3 className="font-heading font-semibold text-primary text-base leading-snug">
+        <div className="min-w-0">
+          <h3 className="font-heading font-semibold text-primary text-base leading-snug break-words">
             {cert.title}
           </h3>
           <p className="text-secondary text-sm mt-1">{cert.issuer}</p>

@@ -1,12 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { type ReactNode } from "react";
 
 interface SectionHeadingProps {
   title: string;
   subtitle?: string;
-  children?: ReactNode;
 }
 
 export default function SectionHeading({ title, subtitle }: SectionHeadingProps) {
@@ -16,17 +14,17 @@ export default function SectionHeading({ title, subtitle }: SectionHeadingProps)
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.6 }}
-      className="text-center mb-16"
+      className="text-center mb-10 sm:mb-14 lg:mb-20"
     >
-      <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-heading text-primary mb-4">
+      <h2 className="text-[clamp(1.875rem,7vw,3rem)] leading-tight font-bold font-heading text-primary mb-3 sm:mb-4">
         {title}
       </h2>
       {subtitle && (
-        <p className="text-secondary text-lg max-w-2xl mx-auto">
+        <p className="text-secondary text-[clamp(0.95rem,2.5vw,1.125rem)] max-w-2xl mx-auto leading-relaxed mt-2 px-1">
           {subtitle}
         </p>
       )}
-      <div className="mt-6 mx-auto w-24 h-1 bg-gradient-to-r from-indigo-500 to-violet-500 rounded-full" />
+      <div className="mt-6 sm:mt-8 mx-auto w-16 sm:w-24 h-1 bg-gradient-to-r from-indigo-500 to-violet-500 rounded-full" />
     </motion.div>
   );
 }

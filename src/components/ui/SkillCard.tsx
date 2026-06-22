@@ -10,19 +10,19 @@ interface SkillCardProps {
 }
 
 export default function SkillCard({ category, index }: SkillCardProps) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
   const Icon = category.icon;
+  const cardRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(cardRef, { once: true, margin: "-30px" });
 
   return (
     <motion.div
-      ref={ref}
+      ref={cardRef}
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
+      viewport={{ once: true, margin: "-30px" }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
       whileHover={{ y: -5, transition: { duration: 0.2 } }}
-      className="group relative p-6 rounded-2xl border border-white/[0.08] bg-card-bg backdrop-blur-sm hover:border-white/[0.15] transition-all duration-300"
+      className="group relative p-4 sm:p-6 rounded-2xl border border-white/[0.08] bg-card-bg backdrop-blur-sm hover:border-white/[0.15] transition-all duration-300 h-full"
     >
       {/* Glow effect on hover */}
       <div
@@ -44,23 +44,42 @@ export default function SkillCard({ category, index }: SkillCardProps) {
       </div>
 
       {/* Skills with progress bars */}
-      <div className="space-y-4">
+      <div className="space-y-5">
         {category.skills.map((skill, i) => (
           <div key={skill.name}>
-            <div className="flex justify-between mb-1.5">
-              <span className="text-sm text-secondary">{skill.name}</span>
-              <span className="text-xs text-white/30">{skill.level}%</span>
+            <div className="flex justify-between mb-2">
+              <span className="text-sm font-medium text-secondary">{skill.name}</span>
+              <span
+                className="text-xs font-semibold px-2 py-0.5 rounded-full"
+                style={{
+                  color: category.color,
+                  backgroundColor: `${category.color}15`,
+                }}
+              >
+                {skill.level}%
+              </span>
             </div>
-            <div className="h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
+            <div className="h-3 bg-white/[0.06] rounded-full overflow-hidden relative">
               <motion.div
                 initial={{ width: 0 }}
                 animate={isInView ? { width: `${skill.level}%` } : { width: 0 }}
-                transition={{ duration: 1, delay: 0.3 + i * 0.1, ease: "easeOut" }}
-                className="h-full rounded-full"
+                transition={{ duration: 1.2, delay: 0.3 + i * 0.1, ease: "easeOut" }}
+                className="h-full rounded-full relative overflow-hidden"
                 style={{
-                  background: `linear-gradient(90deg, ${category.color}, ${category.color}88)`,
+                  background: `linear-gradient(90deg, ${category.color}cc, ${category.color})`,
+                  boxShadow: `0 0 12px ${category.color}40, 0 0 4px ${category.color}30`,
                 }}
-              />
+              >
+                {/* Animated shimmer effect */}
+                <div
+                  className="absolute inset-0 rounded-full"
+                  style={{
+                    background: `linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%)`,
+                    animation: "shimmer 2s ease-in-out infinite",
+                    animationDelay: `${i * 0.2}s`,
+                  }}
+                />
+              </motion.div>
             </div>
           </div>
         ))}

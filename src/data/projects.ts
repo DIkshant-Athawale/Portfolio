@@ -9,6 +9,7 @@ export interface Project {
   githubUrl?: string;
   liveUrl?: string;
   gradient: string;
+  period?: string;
 }
 
 export const projects: Project[] = [
@@ -17,16 +18,14 @@ export const projects: Project[] = [
     title: "College ERP",
     subtitle: "Academic Management System",
     description:
-      "A comprehensive full-stack role-based academic management system designed for students, faculty, and administrators. Features real-time data synchronization, secure authentication, and a complete suite of academic tools.",
+      "Engineered a full-stack, role-based academic management platform serving students, faculty, and administrators. Architected both the React (TypeScript) frontend and Node.js/Express backend with a MySQL database featuring connection pooling — eliminating manual academic workflows and enabling real-time data synchronization across all connected clients.",
     features: [
-      "Role-based access for students, faculty, and admin",
-      "JWT authentication with refresh tokens",
-      "Secure password hashing using bcrypt",
-      "Real-time synchronization via Socket.IO",
-      "Attendance tracking & fee management",
-      "Timetable scheduling system",
-      "Internal marks calculator",
-      "Charts & dashboards using Recharts",
+      "Role-based access control for students, faculty & administrators",
+      "Secure JWT authentication with httpOnly refresh-token cookies & bcrypt hashing",
+      "Real-time data sync via Socket.IO — dashboards update without page reloads",
+      "End-to-end workflows for attendance tracking, fee management & timetable scheduling",
+      "Configurable internal-marks calculator combining assignment, test & attendance weights",
+      "Polished UI with shadcn/ui (Radix), Framer Motion animations & Recharts visualizations",
     ],
     techStack: [
       "React",
@@ -37,28 +36,31 @@ export const projects: Project[] = [
       "Socket.IO",
       "JWT",
       "TailwindCSS",
+      "Vite",
     ],
     category: "full-stack",
     githubUrl: "https://github.com/DIkshant-Athawale",
     gradient: "from-indigo-500 via-purple-500 to-pink-500",
+    period: "Jan 2026 – Mar 2026",
   },
   {
     id: "portfolio-v1",
     title: "Personal Portfolio Website",
-    subtitle: "Responsive Personal Website",
+    subtitle: "Responsive Developer Portfolio",
     description:
-      "A clean, responsive personal website built with vanilla web technologies. Achieves a 95+ Lighthouse score with mobile-first design and cross-browser compatibility.",
+      "Designed and deployed a responsive personal portfolio showcasing projects, technical skills, and contact information. Implemented mobile-first responsive design with cross-browser compatibility, achieving a 95+ Google Lighthouse performance score. Version-controlled and hosted via GitHub Pages.",
     features: [
-      "Fully responsive mobile-first design",
-      "95+ Lighthouse performance score",
-      "Cross-browser compatibility",
-      "Hosted on GitHub Pages",
-      "Smooth animations and transitions",
+      "Mobile-first responsive design with fluid layouts",
+      "95+ Google Lighthouse performance score",
+      "Cross-browser compatibility across modern browsers",
+      "Smooth CSS animations and scroll-driven transitions",
+      "SEO-optimized with semantic HTML structure",
     ],
     techStack: ["HTML5", "CSS3", "JavaScript", "GitHub Pages"],
     category: "frontend",
     githubUrl: "https://github.com/DIkshant-Athawale",
     gradient: "from-cyan-500 via-blue-500 to-indigo-500",
+    period: "June 2026",
   },
 ];
 

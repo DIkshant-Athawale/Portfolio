@@ -1,20 +1,24 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 
 export default function CursorGlow() {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [isVisible, setIsVisible] = useState(false);
+  const glowRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const el = glowRef.current;
+    if (!el || window.matchMedia("(pointer: coarse)").matches) return;
+
     const handleMouseMove = (e: MouseEvent) => {
-      setPosition({ x: e.clientX, y: e.clientY });
-      setIsVisible(true);
+      el.style.background = `radial-gradient(600px circle at ${e.clientX}px ${e.clientY}px, rgba(99, 102, 241, 0.06), transparent 40%)`;
+      el.style.opacity = "1";
     };
 
-    const handleMouseLeave = () => setIsVisible(false);
+    const handleMouseLeave = () => {
+      el.style.opacity = "0";
+    };
 
-    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
     document.addEventListener("mouseleave", handleMouseLeave);
 
     return () => {
@@ -23,14 +27,11 @@ export default function CursorGlow() {
     };
   }, []);
 
-  if (!isVisible) return null;
-
   return (
     <div
-      className="pointer-events-none fixed inset-0 z-[9999] transition-opacity duration-300"
-      style={{
-        background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, rgba(99, 102, 241, 0.06), transparent 40%)`,
-      }}
+      ref={glowRef}
+      className="pointer-events-none fixed inset-0 z-[9999] transition-opacity duration-300 opacity-0 hidden md:block"
+      style={{ willChange: "background" }}
     />
   );
 }

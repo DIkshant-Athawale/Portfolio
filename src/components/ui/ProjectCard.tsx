@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { ExternalLink, Github } from "lucide-react";
 import type { Project } from "@/data/projects";
@@ -11,34 +10,32 @@ interface ProjectCardProps {
 }
 
 export default function ProjectCard({ project, index }: ProjectCardProps) {
-  const [isHovered, setIsHovered] = useState(false);
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay: index * 0.15 }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
       className="group relative rounded-2xl overflow-hidden border border-white/[0.08] bg-card-bg backdrop-blur-sm hover:border-white/[0.15] transition-all duration-300"
     >
       {/* Gradient header */}
-      <div className={`relative h-48 bg-gradient-to-br ${project.gradient} p-6 flex flex-col justify-end`}>
+      <div className={`relative min-h-44 sm:h-48 bg-gradient-to-br ${project.gradient} p-4 sm:p-6 flex flex-col justify-end overflow-hidden`}>
         <div className="absolute inset-0 bg-black/20" />
-        <motion.div
-          animate={{ scale: isHovered ? 1.05 : 1 }}
-          transition={{ duration: 0.4 }}
-          className="absolute inset-0 bg-gradient-to-br from-black/0 to-black/50"
-        />
+        {/* Pure CSS scale on hover — no useState needed */}
+        <div className="absolute inset-0 bg-gradient-to-br from-black/0 to-black/50 group-hover:scale-105 transition-transform duration-500" />
         <div className="relative z-10">
-          <p className="text-white/70 text-sm font-medium mb-1">{project.subtitle}</p>
-          <h3 className="text-2xl font-heading font-bold text-white">{project.title}</h3>
+          <div className="flex flex-col min-[400px]:flex-row min-[400px]:items-center min-[400px]:justify-between gap-1 mb-1">
+            <p className="text-white/70 text-sm font-medium">{project.subtitle}</p>
+            {project.period && (
+              <span className="text-white/50 text-xs font-mono">{project.period}</span>
+            )}
+          </div>
+          <h3 className="text-xl sm:text-2xl font-heading font-bold text-white break-words">{project.title}</h3>
         </div>
       </div>
 
       {/* Content */}
-      <div className="p-6">
+      <div className="p-4 sm:p-6">
         <p className="text-secondary text-sm leading-relaxed mb-4">
           {project.description}
         </p>
@@ -49,10 +46,10 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
             Key Features
           </h4>
           <ul className="space-y-2">
-            {project.features.slice(0, 4).map((f, i) => (
-              <li key={i} className="flex items-start gap-2 text-sm text-secondary">
-                <span className="text-indigo-400 mt-1 flex-shrink-0">▸</span>
-                {f}
+            {project.features.slice(0, 4).map((feature) => (
+              <li key={feature} className="flex items-start gap-2 text-sm text-secondary">
+                <span className="text-indigo-400 mt-1 flex-shrink-0" aria-hidden="true">▸</span>
+                {feature}
               </li>
             ))}
             {project.features.length > 4 && (
@@ -76,15 +73,15 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         </div>
 
         {/* Buttons */}
-        <div className="flex gap-3">
+        <div className="flex flex-col min-[380px]:flex-row gap-3">
           {project.githubUrl && (
             <a
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-white/[0.06] text-white/80 hover:bg-white/[0.12] transition-colors"
+              className="min-h-11 flex items-center justify-center gap-2 px-4 py-2 text-sm rounded-lg bg-white/[0.06] text-white/80 hover:bg-white/[0.12] active:scale-[0.98] transition-all"
             >
-              <Github size={16} />
+              <Github size={16} aria-hidden="true" />
               GitHub
             </a>
           )}
@@ -93,9 +90,9 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
               href={project.liveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-indigo-500/20 text-indigo-300 hover:bg-indigo-500/30 transition-colors"
+              className="min-h-11 flex items-center justify-center gap-2 px-4 py-2 text-sm rounded-lg bg-indigo-500/20 text-indigo-300 hover:bg-indigo-500/30 active:scale-[0.98] transition-all"
             >
-              <ExternalLink size={16} />
+              <ExternalLink size={16} aria-hidden="true" />
               Live Demo
             </a>
           )}

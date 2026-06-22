@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 
 interface TerminalLine {
   cmd: string;
@@ -16,15 +16,20 @@ interface TerminalCardProps {
 export default function TerminalCard({ lines, title = "terminal" }: TerminalCardProps) {
   const [visibleLines, setVisibleLines] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(containerRef, { once: true, margin: "-100px" });
+  const totalSteps = lines.length * 2;
 
+  // Only start the typing animation after the card scrolls into view
   useEffect(() => {
-    if (visibleLines < lines.length * 2) {
-      const timer = setTimeout(() => {
-        setVisibleLines((prev) => prev + 1);
-      }, 300);
-      return () => clearTimeout(timer);
-    }
-  }, [visibleLines, lines.length]);
+    if (!isInView) return;
+    if (visibleLines >= totalSteps) return;
+
+    const timer = setTimeout(() => {
+      setVisibleLines((prev) => prev + 1);
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [isInView, visibleLines, totalSteps]);
 
   return (
     <motion.div
@@ -44,7 +49,7 @@ export default function TerminalCard({ lines, title = "terminal" }: TerminalCard
       </div>
 
       {/* Terminal content */}
-      <div className="p-5 font-mono text-sm space-y-3 min-h-[280px]">
+      <div className="p-4 sm:p-5 font-mono text-xs sm:text-sm space-y-3 min-h-[250px] sm:min-h-[280px]">
         {lines.map((line, i) => (
           <div key={i}>
             {visibleLines > i * 2 && (
@@ -52,10 +57,10 @@ export default function TerminalCard({ lines, title = "terminal" }: TerminalCard
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.3 }}
-                className="flex items-center gap-2"
+                className="flex items-start gap-2 min-w-0"
               >
                 <span className="text-emerald-400">❯</span>
-                <span className="text-cyan-300">{line.cmd}</span>
+                <span className="text-cyan-300 break-all">{line.cmd}</span>
               </motion.div>
             )}
             {visibleLines > i * 2 + 1 && (
@@ -63,14 +68,14 @@ export default function TerminalCard({ lines, title = "terminal" }: TerminalCard
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.3 }}
-                className="text-white/70 ml-5 mt-1"
+                className="text-white/70 ml-5 mt-1 break-words"
               >
                 {line.output}
               </motion.div>
             )}
           </div>
         ))}
-        {visibleLines < lines.length * 2 && (
+        {isInView && visibleLines < totalSteps && (
           <motion.span
             animate={{ opacity: [1, 0] }}
             transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse" }}

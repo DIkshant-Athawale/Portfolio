@@ -22,8 +22,8 @@ export default function TimelineItem({ item, index, isLast }: TimelineItemProps)
           whileInView={{ height: "100%" }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="absolute left-1/2 top-[60px] w-[2px] bg-gradient-to-b from-indigo-500/40 to-transparent -translate-x-1/2 z-0"
-          style={{ height: "calc(100% + 2rem)" }}
+          className="absolute hidden md:block left-1/2 top-[60px] w-[2px] bg-gradient-to-b from-indigo-500/40 to-transparent -translate-x-1/2 z-0"
+          style={{ height: "calc(100% + 4rem)" }}
         />
       )}
 
@@ -37,7 +37,7 @@ export default function TimelineItem({ item, index, isLast }: TimelineItemProps)
           transition={{ duration: 0.5, delay: 0.2 }}
           className={`${isLeft ? "" : "md:order-3"} ${isLeft ? "md:text-right" : "md:text-left"}`}
         >
-          <div className={`p-5 rounded-2xl border border-white/[0.08] bg-card-bg backdrop-blur-sm ${isLeft ? "md:ml-auto" : "md:mr-auto"} max-w-md`}>
+          <div className={`p-4 sm:p-6 md:p-8 rounded-2xl border border-white/[0.08] bg-card-bg backdrop-blur-sm ${isLeft ? "md:ml-auto" : "md:mr-auto"} max-w-md`}>
             <span
               className="text-xs font-bold uppercase tracking-wider"
               style={{ color: item.color }}
@@ -50,6 +50,9 @@ export default function TimelineItem({ item, index, isLast }: TimelineItemProps)
             <p className="text-secondary text-sm mt-1">{item.institution}</p>
             {item.university && (
               <p className="text-white/30 text-xs mt-1">{item.university}</p>
+            )}
+            {item.location && (
+              <p className="text-white/25 text-xs mt-1">{item.location}</p>
             )}
           </div>
         </motion.div>

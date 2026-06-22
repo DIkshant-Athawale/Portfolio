@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Sun, Moon } from "lucide-react";
 import { useTheme } from "@/components/ThemeProvider";
+import DownloadResumeButton from "@/components/ui/DownloadResumeButton";
 import { personal } from "@/data/personal";
 
 const navLinks = [
@@ -27,6 +28,22 @@ export default function Navbar() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Close mobile menu on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && mobileOpen) setMobileOpen(false);
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [mobileOpen]);
+
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -64,9 +81,10 @@ export default function Navbar() {
             ? "bg-nav-bg backdrop-blur-xl border-b border-white/[0.06] shadow-lg shadow-black/10"
             : "bg-transparent"
         }`}
+        aria-label="Main navigation"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
+          <div className="flex items-center justify-between h-16 sm:h-[4.5rem]">
             {/* Logo */}
             <a
               href="#hero"
@@ -74,7 +92,7 @@ export default function Navbar() {
                 e.preventDefault();
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }}
-              className="font-heading font-bold text-xl text-primary hover:text-accent-primary transition-colors"
+              className="min-h-11 inline-flex items-center font-heading font-bold text-lg sm:text-xl text-primary hover:text-accent-primary transition-colors"
             >
               <span className="text-accent-primary">&lt;</span>
               {personal.initials}
@@ -107,28 +125,28 @@ export default function Navbar() {
               </button>
 
               {/* Resume */}
-              <a
-                href={personal.resumeUrl}
-                download
-                className="ml-3 px-4 py-2 text-sm font-medium rounded-lg bg-accent-primary text-white hover:bg-accent-primary/90 transition-all"
+              <DownloadResumeButton
+                className="min-h-11 ml-3 px-4 py-2 text-sm font-medium rounded-lg bg-accent-primary text-white hover:bg-accent-primary/90 hover:-translate-y-0.5 hover:shadow-lg hover:shadow-indigo-500/20"
               >
                 Resume
-              </a>
+              </DownloadResumeButton>
             </div>
 
             {/* Mobile menu button */}
             <div className="flex items-center gap-2 md:hidden">
               <button
                 onClick={toggleTheme}
-                className="p-2 rounded-lg text-secondary hover:text-primary"
+                className="w-11 h-11 inline-flex items-center justify-center rounded-lg text-secondary hover:text-primary hover:bg-white/[0.04]"
                 aria-label="Toggle theme"
               >
                 {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
               </button>
               <button
                 onClick={() => setMobileOpen(!mobileOpen)}
-                className="p-2 rounded-lg text-secondary hover:text-primary"
-                aria-label="Toggle menu"
+                className="w-11 h-11 inline-flex items-center justify-center rounded-lg text-secondary hover:text-primary hover:bg-white/[0.04]"
+                aria-label={mobileOpen ? "Close navigation menu" : "Open navigation menu"}
+                aria-expanded={mobileOpen}
+                aria-controls="mobile-navigation"
               >
                 {mobileOpen ? <X size={22} /> : <Menu size={22} />}
               </button>
@@ -146,18 +164,24 @@ export default function Navbar() {
             exit={{ opacity: 0, x: "100%" }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="fixed inset-0 z-40 md:hidden"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobile navigation"
           >
             <div
               className="absolute inset-0 bg-black/60 backdrop-blur-sm"
               onClick={() => setMobileOpen(false)}
             />
-            <div className="absolute right-0 top-0 bottom-0 w-72 bg-nav-bg border-l border-white/[0.06] p-6 pt-20">
+            <div
+              id="mobile-navigation"
+              className="absolute right-0 top-0 bottom-0 w-[min(85vw,22rem)] bg-nav-bg border-l border-white/[0.06] px-4 sm:px-6 pt-20 pb-[max(1.5rem,env(safe-area-inset-bottom))] overflow-y-auto"
+            >
               <div className="flex flex-col gap-2">
                 {navLinks.map((link) => (
                   <button
                     key={link.href}
                     onClick={() => handleNavClick(link.href)}
-                    className={`px-4 py-3 text-left text-base font-medium rounded-lg transition-all ${
+                    className={`min-h-12 px-4 py-3 text-left text-base font-medium rounded-lg transition-all ${
                       activeSection === link.href
                         ? "text-accent-primary bg-accent-primary/10"
                         : "text-secondary hover:text-primary hover:bg-white/[0.04]"
@@ -166,13 +190,12 @@ export default function Navbar() {
                     {link.label}
                   </button>
                 ))}
-                <a
-                  href={personal.resumeUrl}
-                  download
-                  className="mt-4 px-4 py-3 text-center text-base font-medium rounded-lg bg-accent-primary text-white"
+                <DownloadResumeButton
+                  onDownloadSuccess={() => setMobileOpen(false)}
+                  className="min-h-12 mt-4 px-4 py-3 text-center text-base font-medium rounded-lg bg-accent-primary text-white hover:bg-accent-primary/90"
                 >
                   Download Resume
-                </a>
+                </DownloadResumeButton>
               </div>
             </div>
           </motion.div>
