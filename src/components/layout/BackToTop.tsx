@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUp } from "lucide-react";
 
 export default function BackToTop() {
@@ -20,21 +19,16 @@ export default function BackToTop() {
   };
 
   return (
-    <AnimatePresence>
-      {isVisible && (
-        <motion.button
-          initial={{ opacity: 0, scale: 0.5, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.5, y: 20 }}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
+        <button
           onClick={scrollToTop}
-          className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-4 sm:bottom-8 sm:right-8 z-50 w-12 h-12 inline-flex items-center justify-center rounded-full bg-accent-primary text-white shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40 transition-shadow"
+          className={`fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-4 sm:bottom-8 sm:right-8 z-50 w-12 h-12 inline-flex items-center justify-center rounded-full bg-accent-primary text-white shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/40 hover:scale-110 active:scale-95 transition-all ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5 pointer-events-none"
+          }`}
           aria-label="Back to top"
+          aria-hidden={!isVisible}
+          tabIndex={isVisible ? 0 : -1}
         >
           <ArrowUp size={20} />
-        </motion.button>
-      )}
-    </AnimatePresence>
+        </button>
   );
 }

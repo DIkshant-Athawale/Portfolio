@@ -1,5 +1,3 @@
-"use client";
-
 import SectionHeading from "@/components/ui/SectionHeading";
 import SkillCard from "@/components/ui/SkillCard";
 import { skillCategories } from "@/data/skills";

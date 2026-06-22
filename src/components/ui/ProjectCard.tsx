@@ -1,6 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
 import { ExternalLink, Github } from "lucide-react";
 import type { Project } from "@/data/projects";
 
@@ -11,12 +8,9 @@ interface ProjectCardProps {
 
 export default function ProjectCard({ project, index }: ProjectCardProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.5, delay: index * 0.15 }}
-      className="group relative rounded-2xl overflow-hidden border border-white/[0.08] bg-card-bg backdrop-blur-sm hover:border-white/[0.15] transition-all duration-300"
+    <div
+      style={{ "--reveal-delay": `${index * 0.15}s`, "--reveal-y": "40px" } as React.CSSProperties}
+      className="reveal group relative rounded-2xl overflow-hidden border border-white/[0.08] bg-card-bg backdrop-blur-sm hover:border-white/[0.15] transition-all duration-300"
     >
       {/* Gradient header */}
       <div className={`relative min-h-44 sm:h-48 bg-gradient-to-br ${project.gradient} p-4 sm:p-6 flex flex-col justify-end overflow-hidden`}>
@@ -98,6 +92,6 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
           )}
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }

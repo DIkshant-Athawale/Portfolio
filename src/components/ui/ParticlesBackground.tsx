@@ -53,6 +53,8 @@ export default function ParticlesBackground() {
 
   useEffect(() => {
     let cancelled = false;
+    let idleId: number | undefined;
+    let fallbackTimer: ReturnType<typeof setTimeout> | undefined;
 
     const loadParticles = async () => {
       if (
@@ -71,13 +73,20 @@ export default function ParticlesBackground() {
         if (!cancelled) {
           setParticlesComponent(() => Particles as ComponentType<ParticlesProps>);
         }
-      } catch {
-        console.warn("Particles background failed to initialize");
-      }
+      } catch {}
     };
 
-    loadParticles();
-    return () => { cancelled = true; };
+    if ("requestIdleCallback" in window) {
+      idleId = window.requestIdleCallback(loadParticles, { timeout: 3000 });
+    } else {
+      fallbackTimer = setTimeout(loadParticles, 1500);
+    }
+
+    return () => {
+      cancelled = true;
+      if (idleId !== undefined) window.cancelIdleCallback(idleId);
+      if (fallbackTimer) clearTimeout(fallbackTimer);
+    };
   }, []);
 
   if (!ParticlesComponent) return null;

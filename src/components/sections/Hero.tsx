@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { ArrowDown, Send, FolderOpen } from "lucide-react";
 import TypingAnimation from "@/components/ui/TypingAnimation";
 import ParticlesBackground from "@/components/ui/ParticlesBackground";
@@ -27,49 +26,37 @@ export default function Hero() {
 
       {/* Content */}
       <div className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
+        <div className="hero-enter" style={{ "--enter-delay": "0.2s" } as React.CSSProperties}>
           <span className="inline-block max-w-full px-3.5 sm:px-4 py-1.5 mb-5 sm:mb-6 text-xs sm:text-sm font-medium rounded-full border border-accent-primary/30 bg-accent-primary/10 text-accent-primary">
             Open to Opportunities 🚀
           </span>
-        </motion.div>
+        </div>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-[clamp(2.25rem,11vw,4.5rem)] font-heading font-bold text-primary leading-[1.08] break-words"
+        <h1
+          style={{ "--enter-delay": "0.4s" } as React.CSSProperties}
+          className="hero-enter text-[clamp(2.25rem,11vw,4.5rem)] font-heading font-bold text-primary leading-[1.08] break-words"
         >
           {personal.heroHeading}
-        </motion.h1>
+        </h1>
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          className="mt-4 sm:mt-5 min-h-[2.25rem] text-[clamp(1.15rem,5vw,1.875rem)] text-secondary font-medium leading-snug"
+        <div
+          style={{ "--enter-delay": "0.6s" } as React.CSSProperties}
+          className="hero-enter mt-4 sm:mt-5 min-h-[2.25rem] text-[clamp(1.15rem,5vw,1.875rem)] text-secondary font-medium leading-snug"
         >
           <TypingAnimation words={personal.typingRoles} className="text-accent-primary" />
-        </motion.div>
+        </div>
 
-        <motion.p
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="mt-5 sm:mt-6 text-[clamp(0.95rem,3.5vw,1.125rem)] text-secondary max-w-2xl mx-auto leading-relaxed"
+        <p
+          style={{ "--enter-delay": "0.8s" } as React.CSSProperties}
+          className="hero-enter mt-5 sm:mt-6 text-[clamp(0.95rem,3.5vw,1.125rem)] text-secondary max-w-2xl mx-auto leading-relaxed"
         >
           {personal.heroIntro}
-        </motion.p>
+        </p>
 
         {/* CTA Buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1 }}
-          className="mt-8 sm:mt-10 flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center justify-center gap-3 sm:gap-4"
+        <div
+          style={{ "--enter-delay": "1s" } as React.CSSProperties}
+          className="hero-enter mt-8 sm:mt-10 flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center justify-center gap-3 sm:gap-4"
         >
           <button
             onClick={() => handleScroll("#projects")}
@@ -90,14 +77,12 @@ export default function Hero() {
           >
             Download Resume
           </DownloadResumeButton>
-        </motion.div>
+        </div>
 
         {/* Terminal snippet */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 1.2 }}
-          className="mt-10 sm:mt-14 max-w-lg mx-auto"
+        <div
+          style={{ "--enter-delay": "1.2s" } as React.CSSProperties}
+          className="hero-enter mt-10 sm:mt-14 max-w-lg mx-auto"
         >
           <div className="rounded-xl overflow-hidden border border-white/[0.08] bg-[#0d1117] text-left shadow-2xl shadow-indigo-500/5">
             <div className="flex items-center gap-2 px-4 py-2.5 bg-[#161b22] border-b border-white/5">
@@ -142,25 +127,22 @@ export default function Hero() {
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2, duration: 1 }}
-          className="mt-10 sm:mt-14 hidden sm:block"
+        <div
+          style={{ "--enter-delay": "2s" } as React.CSSProperties}
+          className="hero-enter mt-10 sm:mt-14 hidden sm:block"
         >
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="flex flex-col items-center gap-2 cursor-pointer text-white/20 hover:text-white/40 transition-colors"
+          <button
+            type="button"
+            className="scroll-bounce mx-auto flex flex-col items-center gap-2 cursor-pointer text-white/20 hover:text-white/40 transition-colors"
             onClick={() => handleScroll("#about")}
           >
             <span className="text-xs uppercase tracking-widest">Scroll</span>
             <ArrowDown size={18} />
-          </motion.div>
-        </motion.div>
+          </button>
+        </div>
       </div>
     </section>
   );

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Sun, Moon } from "lucide-react";
 import { useTheme } from "@/components/ThemeProvider";
 import DownloadResumeButton from "@/components/ui/DownloadResumeButton";
@@ -72,10 +71,7 @@ export default function Navbar() {
 
   return (
     <>
-      <motion.nav
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
+      <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
             ? "bg-nav-bg backdrop-blur-xl border-b border-white/[0.06] shadow-lg shadow-black/10"
@@ -153,19 +149,15 @@ export default function Navbar() {
             </div>
           </div>
         </div>
-      </motion.nav>
+      </nav>
 
       {/* Mobile menu */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ opacity: 0, x: "100%" }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: "100%" }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="fixed inset-0 z-40 md:hidden"
+          <div
+            className="mobile-menu fixed inset-0 z-40 md:hidden"
+            data-open={mobileOpen}
             role="dialog"
-            aria-modal="true"
+            aria-modal={mobileOpen}
+            aria-hidden={!mobileOpen}
             aria-label="Mobile navigation"
           >
             <div
@@ -174,7 +166,7 @@ export default function Navbar() {
             />
             <div
               id="mobile-navigation"
-              className="absolute right-0 top-0 bottom-0 w-[min(85vw,22rem)] bg-nav-bg border-l border-white/[0.06] px-4 sm:px-6 pt-20 pb-[max(1.5rem,env(safe-area-inset-bottom))] overflow-y-auto"
+              className="mobile-menu-panel absolute right-0 top-0 bottom-0 w-[min(85vw,22rem)] bg-nav-bg border-l border-white/[0.06] px-4 sm:px-6 pt-20 pb-[max(1.5rem,env(safe-area-inset-bottom))] overflow-y-auto"
             >
               <div className="flex flex-col gap-2">
                 {navLinks.map((link) => (
@@ -198,9 +190,7 @@ export default function Navbar() {
                 </DownloadResumeButton>
               </div>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
     </>
   );
 }

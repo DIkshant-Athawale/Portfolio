@@ -1,6 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
 import SectionHeading from "@/components/ui/SectionHeading";
 import TerminalCard from "@/components/ui/TerminalCard";
 import { personal } from "@/data/personal";
@@ -19,12 +16,9 @@ export default function About() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-14 lg:gap-20 items-start">
           {/* Text */}
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6 }}
-            className="space-y-6 sm:space-y-8"
+          <div
+            className="reveal space-y-6 sm:space-y-8"
+            style={{ "--reveal-x": "-40px", "--reveal-y": "0px" } as React.CSSProperties}
           >
             <p className="text-secondary text-base sm:text-lg leading-relaxed">
               {personal.about}
@@ -50,20 +44,22 @@ export default function About() {
                 </div>
               ))}
             </div>
-          </motion.div>
+          </div>
 
           {/* Terminal */}
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+          <div
+            className="reveal"
+            style={{
+              "--reveal-x": "40px",
+              "--reveal-y": "0px",
+              "--reveal-delay": "0.2s",
+            } as React.CSSProperties}
           >
             <TerminalCard
               lines={personal.terminalInfo}
               title="dikshant@dev:~$"
             />
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

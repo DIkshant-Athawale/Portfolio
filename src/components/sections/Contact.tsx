@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
-import { motion } from "framer-motion";
+import { useState, useCallback, useEffect, useRef } from "react";
 import {
   Mail,
   Phone,
@@ -32,6 +31,13 @@ const INPUT_CLASS =
 export default function Contact() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [status, setStatus] = useState<FormStatus>("idle");
+  const resetTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (resetTimer.current) clearTimeout(resetTimer.current);
+    };
+  }, []);
 
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -53,12 +59,11 @@ export default function Contact() {
       window.open(mailtoLink, "_blank");
       setStatus("sent");
 
-      const resetTimer = setTimeout(() => {
+      if (resetTimer.current) clearTimeout(resetTimer.current);
+      resetTimer.current = setTimeout(() => {
         setStatus("idle");
         setFormData({ name: "", email: "", message: "" });
       }, 3000);
-
-      return () => clearTimeout(resetTimer);
     },
     [formData]
   );
@@ -75,11 +80,9 @@ export default function Contact() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-14 lg:gap-20 max-w-5xl mx-auto items-start">
           {/* Form */}
-          <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.5 }}
+          <div
+            className="reveal"
+            style={{ "--reveal-x": "-40px", "--reveal-y": "0px" } as React.CSSProperties}
           >
             <form
               onSubmit={handleSubmit}
@@ -153,15 +156,16 @@ export default function Contact() {
                 )}
               </button>
             </form>
-          </motion.div>
+          </div>
 
           {/* Contact info */}
-          <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="space-y-4"
+          <div
+            className="reveal space-y-4"
+            style={{
+              "--reveal-x": "40px",
+              "--reveal-y": "0px",
+              "--reveal-delay": "0.2s",
+            } as React.CSSProperties}
           >
             <h3 className="font-heading font-semibold text-primary text-xl mb-6">
               Contact Information
@@ -170,17 +174,13 @@ export default function Contact() {
             {contactInfo.map((info, i) => {
               const Icon = info.icon;
               return (
-                <motion.a
+                <a
                   key={info.label}
                   href={info.href}
                   target={info.href.startsWith("http") ? "_blank" : undefined}
                   rel={info.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: i * 0.08 }}
-                  whileHover={{ x: 5 }}
-                  className="flex items-center gap-4 p-4 rounded-xl border border-white/[0.06] bg-card-bg hover:border-white/[0.12] transition-all group"
+                  style={{ "--reveal-delay": `${i * 0.08}s`, "--reveal-y": "20px" } as React.CSSProperties}
+                  className="reveal flex items-center gap-4 p-4 rounded-xl border border-white/[0.06] bg-card-bg hover:border-white/[0.12] hover:translate-x-1 transition-all group"
                 >
                   <div className="p-2.5 rounded-lg bg-accent-primary/10 text-accent-primary group-hover:bg-accent-primary/20 transition-colors flex-shrink-0">
                     <Icon size={20} aria-hidden="true" />
@@ -189,7 +189,7 @@ export default function Contact() {
                     <p className="text-xs text-white/30 uppercase tracking-wider">{info.label}</p>
                     <p className="text-primary text-sm font-medium mt-0.5 break-words">{info.value}</p>
                   </div>
-                </motion.a>
+                </a>
               );
             })}
 
@@ -201,7 +201,7 @@ export default function Contact() {
                 Available for remote opportunities worldwide
               </p>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

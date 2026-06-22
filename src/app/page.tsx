@@ -4,6 +4,7 @@ import ScrollProgress from "@/components/layout/ScrollProgress";
 import BackToTop from "@/components/layout/BackToTop";
 import CursorGlow from "@/components/ui/CursorGlow";
 import Chatbot from "@/components/ui/Chatbot";
+import RevealObserver from "@/components/ui/RevealObserver";
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
 import Skills from "@/components/sections/Skills";
@@ -16,6 +17,7 @@ export default function Home() {
   return (
     <>
       <CursorGlow />
+      <RevealObserver />
       <ScrollProgress />
       <Navbar />
 

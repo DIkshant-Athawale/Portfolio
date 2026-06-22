@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { motion, useInView } from "framer-motion";
 
 interface TerminalLine {
   cmd: string;
@@ -16,8 +15,25 @@ interface TerminalCardProps {
 export default function TerminalCard({ lines, title = "terminal" }: TerminalCardProps) {
   const [visibleLines, setVisibleLines] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(containerRef, { once: true, margin: "-100px" });
+  const [isInView, setIsInView] = useState(false);
   const totalSteps = lines.length * 2;
+
+  useEffect(() => {
+    const element = containerRef.current;
+    if (!element) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setIsInView(true);
+        observer.disconnect();
+      },
+      { rootMargin: "100px 0px" }
+    );
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
 
   // Only start the typing animation after the card scrolls into view
   useEffect(() => {
@@ -32,13 +48,10 @@ export default function TerminalCard({ lines, title = "terminal" }: TerminalCard
   }, [isInView, visibleLines, totalSteps]);
 
   return (
-    <motion.div
+    <div
       ref={containerRef}
-      initial={{ opacity: 0, scale: 0.95 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5 }}
-      className="rounded-xl overflow-hidden border border-white/10 bg-[#0d1117] shadow-2xl shadow-indigo-500/5"
+      className="reveal rounded-xl overflow-hidden border border-white/10 bg-[#0d1117] shadow-2xl shadow-indigo-500/5"
+      style={{ "--reveal-scale": "0.95", "--reveal-y": "0px" } as React.CSSProperties}
     >
       {/* Title bar */}
       <div className="flex items-center gap-2 px-4 py-3 bg-[#161b22] border-b border-white/5">
@@ -53,36 +66,26 @@ export default function TerminalCard({ lines, title = "terminal" }: TerminalCard
         {lines.map((line, i) => (
           <div key={i}>
             {visibleLines > i * 2 && (
-              <motion.div
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.3 }}
-                className="flex items-start gap-2 min-w-0"
+              <div
+                className="terminal-line-enter flex items-start gap-2 min-w-0"
               >
                 <span className="text-emerald-400">❯</span>
                 <span className="text-cyan-300 break-all">{line.cmd}</span>
-              </motion.div>
+              </div>
             )}
             {visibleLines > i * 2 + 1 && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.3 }}
-                className="text-white/70 ml-5 mt-1 break-words"
+              <div
+                className="terminal-line-enter text-white/70 ml-5 mt-1 break-words"
               >
                 {line.output}
-              </motion.div>
+              </div>
             )}
           </div>
         ))}
         {isInView && visibleLines < totalSteps && (
-          <motion.span
-            animate={{ opacity: [1, 0] }}
-            transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse" }}
-            className="inline-block w-2 h-4 bg-emerald-400"
-          />
+          <span className="inline-block w-2 h-4 bg-emerald-400 animate-pulse" />
         )}
       </div>
-    </motion.div>
+    </div>
   );
 }

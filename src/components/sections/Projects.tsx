@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import SectionHeading from "@/components/ui/SectionHeading";
 import ProjectCard from "@/components/ui/ProjectCard";
 import GitHubGraph from "@/components/ui/GitHubGraph";
@@ -14,7 +13,7 @@ export default function Projects() {
     activeFilter === "All"
       ? projects
       : projects.filter(
-          (p) => p.category.toLowerCase() === activeFilter.toLowerCase().replace("-", "-")
+          (p) => p.category.toLowerCase() === activeFilter.toLowerCase()
         );
 
   return (
@@ -45,20 +44,14 @@ export default function Projects() {
         </div>
 
         {/* Project grid */}
-        <AnimatePresence mode="wait">
-          <motion.div
+          <div
             key={activeFilter}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
             className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-10"
           >
             {filteredProjects.map((project, index) => (
               <ProjectCard key={project.id} project={project} index={index} />
             ))}
-          </motion.div>
-        </AnimatePresence>
+          </div>
 
         {/* GitHub Graph */}
         <div className="mt-14 sm:mt-20 lg:mt-24">

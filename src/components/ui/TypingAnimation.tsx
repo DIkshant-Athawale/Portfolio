@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 
 interface TypingAnimationProps {
   words: string[];
@@ -45,11 +44,7 @@ export default function TypingAnimation({ words, className = "" }: TypingAnimati
   return (
     <span className={className}>
       {text}
-      <motion.span
-        animate={{ opacity: [1, 0] }}
-        transition={{ duration: 0.6, repeat: Infinity, repeatType: "reverse" }}
-        className="inline-block w-[3px] h-[1em] bg-accent-primary ml-1 align-middle"
-      />
+      <span className="inline-block w-[3px] h-[1em] bg-accent-primary ml-1 align-middle animate-pulse" />
     </span>
   );
 }

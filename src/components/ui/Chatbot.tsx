@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, X, Send } from "lucide-react";
 
 interface Message {
@@ -62,31 +61,20 @@ export default function Chatbot() {
   return (
     <>
       {/* Toggle button */}
-      <AnimatePresence>
         {!isOpen && (
-          <motion.button
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            exit={{ scale: 0 }}
-            whileHover={{ scale: 1.1 }}
+          <button
             onClick={() => setIsOpen(true)}
-            className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] left-4 sm:bottom-8 sm:left-8 z-50 w-14 h-14 inline-flex items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 text-white shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 transition-shadow"
+            className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] left-4 sm:bottom-8 sm:left-8 z-50 w-14 h-14 inline-flex items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 text-white shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:scale-110 transition-all"
             aria-label="Open chatbot"
           >
             <MessageCircle size={24} />
-          </motion.button>
+          </button>
         )}
-      </AnimatePresence>
 
       {/* Chat window */}
-      <AnimatePresence>
         {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-x-3 bottom-[max(0.75rem,env(safe-area-inset-bottom))] z-50 sm:inset-x-auto sm:bottom-8 sm:left-8 w-auto sm:w-96 max-h-[calc(100dvh-1.5rem)] rounded-2xl border border-white/[0.1] bg-[#111118]/95 backdrop-blur-xl shadow-2xl shadow-black/40 overflow-hidden"
+          <div
+            className="hero-enter fixed inset-x-3 bottom-[max(0.75rem,env(safe-area-inset-bottom))] z-50 sm:inset-x-auto sm:bottom-8 sm:left-8 w-auto sm:w-96 max-h-[calc(100dvh-1.5rem)] rounded-2xl border border-white/[0.1] bg-[#111118]/95 backdrop-blur-xl shadow-2xl shadow-black/40 overflow-hidden"
           >
             {/* Header */}
             <div className="flex items-center justify-between px-5 py-4 border-b border-white/[0.06] bg-gradient-to-r from-indigo-500/10 to-violet-500/10">
@@ -111,11 +99,9 @@ export default function Chatbot() {
             {/* Messages */}
             <div className="h-[min(18rem,45dvh)] overflow-y-auto p-4 space-y-3 scrollbar-thin">
               {messages.map((msg, i) => (
-                <motion.div
+                <div
                   key={i}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+                  className={`terminal-line-enter flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
                 >
                   <div
                     className={`max-w-[80%] px-3.5 py-2.5 rounded-2xl text-sm ${
@@ -126,7 +112,7 @@ export default function Chatbot() {
                   >
                     {msg.content}
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
 
@@ -150,9 +136,8 @@ export default function Chatbot() {
                 </button>
               </div>
             </div>
-          </motion.div>
+          </div>
         )}
-      </AnimatePresence>
     </>
   );
 }

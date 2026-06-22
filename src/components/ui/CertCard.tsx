@@ -1,6 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
 import type { Certification } from "@/data/certifications";
 
 interface CertCardProps {
@@ -12,13 +9,9 @@ export default function CertCard({ cert, index }: CertCardProps) {
   const Icon = cert.icon;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      whileHover={{ y: -4, transition: { duration: 0.2 } }}
-      className="group relative p-4 sm:p-6 rounded-2xl border border-white/[0.08] bg-card-bg backdrop-blur-sm hover:border-white/[0.15] transition-all duration-300"
+    <div
+      style={{ "--reveal-delay": `${index * 0.1}s` } as React.CSSProperties}
+      className="reveal group relative p-4 sm:p-6 rounded-2xl border border-white/[0.08] bg-card-bg backdrop-blur-sm hover:border-white/[0.15] hover:-translate-y-1 transition-all duration-300"
     >
       <div
         className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 blur-xl"
@@ -48,6 +41,6 @@ export default function CertCard({ cert, index }: CertCardProps) {
           </span>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }

@@ -1,5 +1,3 @@
-"use client";
-
 import SectionHeading from "@/components/ui/SectionHeading";
 import TimelineItem from "@/components/ui/TimelineItem";
 import { education } from "@/data/education";

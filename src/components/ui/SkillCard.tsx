@@ -1,7 +1,3 @@
-"use client";
-
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
 import type { SkillCategory } from "@/data/skills";
 
 interface SkillCardProps {
@@ -11,18 +7,11 @@ interface SkillCardProps {
 
 export default function SkillCard({ category, index }: SkillCardProps) {
   const Icon = category.icon;
-  const cardRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(cardRef, { once: true, margin: "-30px" });
 
   return (
-    <motion.div
-      ref={cardRef}
-      initial={{ opacity: 0, y: 40 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-30px" }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      whileHover={{ y: -5, transition: { duration: 0.2 } }}
-      className="group relative p-4 sm:p-6 rounded-2xl border border-white/[0.08] bg-card-bg backdrop-blur-sm hover:border-white/[0.15] transition-all duration-300 h-full"
+    <div
+      style={{ "--reveal-delay": `${index * 0.1}s`, "--reveal-y": "40px" } as React.CSSProperties}
+      className="reveal group relative p-4 sm:p-6 rounded-2xl border border-white/[0.08] bg-card-bg backdrop-blur-sm hover:border-white/[0.15] hover:-translate-y-1 transition-all duration-300 h-full"
     >
       {/* Glow effect on hover */}
       <div
@@ -60,15 +49,14 @@ export default function SkillCard({ category, index }: SkillCardProps) {
               </span>
             </div>
             <div className="h-3 bg-white/[0.06] rounded-full overflow-hidden relative">
-              <motion.div
-                initial={{ width: 0 }}
-                animate={isInView ? { width: `${skill.level}%` } : { width: 0 }}
-                transition={{ duration: 1.2, delay: 0.3 + i * 0.1, ease: "easeOut" }}
-                className="h-full rounded-full relative overflow-hidden"
+              <div
+                className="skill-fill h-full rounded-full relative overflow-hidden"
                 style={{
+                  "--skill-level": `${skill.level}%`,
+                  "--skill-delay": `${0.3 + i * 0.1}s`,
                   background: `linear-gradient(90deg, ${category.color}cc, ${category.color})`,
                   boxShadow: `0 0 12px ${category.color}40, 0 0 4px ${category.color}30`,
-                }}
+                } as React.CSSProperties}
               >
                 {/* Animated shimmer effect */}
                 <div
@@ -79,11 +67,11 @@ export default function SkillCard({ category, index }: SkillCardProps) {
                     animationDelay: `${i * 0.2}s`,
                   }}
                 />
-              </motion.div>
+              </div>
             </div>
           </div>
         ))}
       </div>
-    </motion.div>
+    </div>
   );
 }
