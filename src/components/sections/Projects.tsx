@@ -44,14 +44,14 @@ export default function Projects() {
         </div>
 
         {/* Project grid */}
-          <div
-            key={activeFilter}
-            className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-10"
-          >
-            {filteredProjects.map((project, index) => (
-              <ProjectCard key={project.id} project={project} index={index} />
-            ))}
-          </div>
+        <div
+          key={activeFilter}
+          className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-10"
+        >
+          {filteredProjects.map((project, index) => (
+            <ProjectCard key={project.id} project={project} index={index} />
+          ))}
+        </div>
 
         {/* GitHub Graph */}
         <div className="mt-14 sm:mt-20 lg:mt-24">

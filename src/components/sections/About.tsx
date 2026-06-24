@@ -33,7 +33,7 @@ export default function About() {
               ].map((info) => (
                 <div
                   key={info.label}
-                  className="min-w-0 p-4 rounded-xl border border-white/[0.06] bg-card-bg"
+                  className="min-w-0 p-4 sm:p-5 rounded-2xl border border-white/[0.06] bg-card-bg"
                 >
                   <p className="text-xs text-white/30 uppercase tracking-wider mb-1">
                     {info.label}

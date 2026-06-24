@@ -30,7 +30,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
 
       {/* Content */}
       <div className="p-4 sm:p-6">
-        <p className="text-secondary text-sm leading-relaxed mb-4">
+        <p className="text-secondary text-sm leading-relaxed mb-5">
           {project.description}
         </p>
 
@@ -55,7 +55,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         </div>
 
         {/* Tech stack */}
-        <div className="flex flex-wrap gap-2 mb-5">
+        <div className="flex flex-wrap gap-2 mb-6">
           {project.techStack.map((tech) => (
             <span
               key={tech}

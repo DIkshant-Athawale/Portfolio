@@ -27,8 +27,6 @@ export default function Home() {
         <Skills />
         <Projects />
         <Education />
-        {/* Section separator: creates breathing room and prevents visual merge */}
-        <div className="h-4 sm:h-8 lg:h-16" aria-hidden="true" />
         <Certifications />
         <Contact />
       </main>

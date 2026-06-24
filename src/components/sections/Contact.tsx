@@ -78,7 +78,7 @@ export default function Contact() {
           subtitle="Have a project in mind or want to collaborate? Let's talk!"
         />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-14 lg:gap-20 max-w-5xl mx-auto items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-14 lg:gap-20 max-w-6xl mx-auto items-start">
           {/* Form */}
           <div
             className="reveal"

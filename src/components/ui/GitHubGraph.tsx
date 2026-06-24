@@ -61,7 +61,7 @@ export default function GitHubGraph() {
             {week.map((level, di) => (
               <div
                 key={di}
-                className={`w-[7px] h-[7px] sm:w-[10px] sm:h-[10px] rounded-[2px] ${COLOR_MAP[level]} transition-colors hover:ring-1 hover:ring-white/20`}
+                className={`w-2 h-2 sm:w-[10px] sm:h-[10px] rounded-[2px] ${COLOR_MAP[level]} transition-colors hover:ring-1 hover:ring-white/20`}
                 aria-hidden="true"
               />
             ))}

@@ -20,7 +20,7 @@ export default function SkillCard({ category, index }: SkillCardProps) {
       />
 
       {/* Header */}
-      <div className="flex items-center gap-3 mb-6">
+      <div className="flex items-center gap-3 mb-5">
         <div
           className="p-2.5 rounded-xl"
           style={{ backgroundColor: `${category.color}15` }}

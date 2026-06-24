@@ -5,7 +5,7 @@ interface SectionHeadingProps {
 
 export default function SectionHeading({ title, subtitle }: SectionHeadingProps) {
   return (
-    <div className="reveal text-center mb-10 sm:mb-14 lg:mb-20">
+    <div className="reveal text-center mb-10 sm:mb-14 lg:mb-16">
       <h2 className="text-[clamp(1.875rem,7vw,3rem)] leading-tight font-bold font-heading text-primary mb-3 sm:mb-4">
         {title}
       </h2>

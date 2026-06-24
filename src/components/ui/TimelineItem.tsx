@@ -57,7 +57,7 @@ export default function TimelineItem({ item, index, isLast }: TimelineItemProps)
           className="reveal relative z-10 hidden md:flex items-center justify-center"
         >
           <div
-            className="w-12 h-12 rounded-full flex items-center justify-center border-2 bg-[#0a0a0f]"
+            className="w-12 h-12 rounded-full flex items-center justify-center border-2 bg-primary"
             style={{ borderColor: item.color }}
           >
             <Icon size={20} style={{ color: item.color }} />

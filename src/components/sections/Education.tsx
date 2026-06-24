@@ -13,7 +13,7 @@ export default function Education() {
           subtitle="My academic journey and qualifications"
         />
 
-        <div className="space-y-5 md:space-y-16 max-w-4xl mx-auto">
+        <div className="space-y-8 md:space-y-16 max-w-4xl mx-auto">
           {education.map((item, index) => (
             <TimelineItem
               key={item.id}

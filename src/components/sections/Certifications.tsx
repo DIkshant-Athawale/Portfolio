@@ -13,7 +13,7 @@ export default function Certifications() {
         />
 
         {/* Certifications */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-7 mb-14 sm:mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-7 mb-12 sm:mb-16">
           {certifications.map((cert, index) => (
             <CertCard key={cert.id} cert={cert} index={index} />
           ))}
@@ -21,7 +21,7 @@ export default function Certifications() {
 
         {/* Activities */}
         <div className="reveal max-w-2xl mx-auto">
-          <h3 className="font-heading font-semibold text-primary text-lg sm:text-xl text-center mb-7 sm:mb-10 pt-8 md:pt-12 border-t border-white/[0.06]">
+          <h3 className="font-heading font-semibold text-primary text-lg sm:text-xl text-center mb-7 sm:mb-10 pt-6 md:pt-10 border-t border-white/[0.06]">
             Extra-Curricular Activities
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">

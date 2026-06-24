@@ -73,7 +73,7 @@ export default function Hero() {
             Contact Me
           </button>
           <DownloadResumeButton
-            className="min-h-12 px-6 py-3 rounded-xl text-secondary font-medium hover:text-primary hover:bg-white/[0.04] hover:-translate-y-0.5"
+            className="min-h-12 px-6 py-3 rounded-xl border border-white/[0.08] text-secondary font-medium hover:text-primary hover:bg-white/[0.04] hover:-translate-y-0.5"
           >
             Download Resume
           </DownloadResumeButton>
