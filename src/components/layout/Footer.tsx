@@ -19,7 +19,7 @@ export default function Footer() {
               {personal.initials}
               <span className="text-accent-primary">/&gt;</span>
             </span>
-            <span className="text-secondary text-sm">|</span>
+            <span className="hidden min-[420px]:inline text-secondary text-sm">|</span>
             <span className="text-secondary text-sm">{personal.tagline}</span>
           </div>
 

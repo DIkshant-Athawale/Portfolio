@@ -194,8 +194,8 @@ export default function Contact() {
             })}
 
             {/* Location card */}
-            <div className="mt-6 p-6 rounded-2xl border border-white/[0.06] bg-card-bg text-center">
-              <MapPin size={32} className="mx-auto text-accent-primary mb-3" aria-hidden="true" />
+            <div className="mt-6 p-6 rounded-2xl border border-white/[0.06] bg-card-bg flex flex-col items-center text-center">
+              <MapPin size={32} className="text-accent-primary mb-3" aria-hidden="true" />
               <p className="text-primary font-medium">{personal.location}</p>
               <p className="text-secondary text-sm mt-1">
                 Available for remote opportunities worldwide

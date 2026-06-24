@@ -48,7 +48,7 @@ export default function Hero() {
 
         <p
           style={{ "--enter-delay": "0.8s" } as React.CSSProperties}
-          className="hero-enter mt-5 sm:mt-6 text-[clamp(0.95rem,3.5vw,1.125rem)] text-secondary max-w-2xl mx-auto leading-relaxed"
+          className="hero-enter mt-5 sm:mt-6 text-[clamp(0.95rem,3.5vw,1.125rem)] text-center text-secondary max-w-2xl mx-auto leading-relaxed"
         >
           {personal.heroIntro}
         </p>

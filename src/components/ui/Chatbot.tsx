@@ -112,10 +112,15 @@ export default function Chatbot() {
 
       {/* Chat window */}
       {isOpen && (
-        <div
-          className="hero-enter fixed inset-x-3 bottom-[max(0.75rem,env(safe-area-inset-bottom))] z-50 sm:inset-x-auto sm:bottom-8 sm:left-8 w-auto sm:w-[26rem] max-h-[calc(100dvh-1.5rem)] rounded-2xl border border-white/[0.1] bg-[#111118]/95 backdrop-blur-xl shadow-2xl shadow-black/40 overflow-hidden flex flex-col"
-          id="chatbot-window"
-        >
+        <>
+          <div
+            className="fixed inset-0 bg-black/40 backdrop-blur-xs z-40 sm:hidden"
+            onClick={() => setIsOpen(false)}
+          />
+          <div
+            className="hero-enter fixed inset-x-3 bottom-[max(0.75rem,env(safe-area-inset-bottom))] z-50 sm:inset-x-auto sm:bottom-8 sm:left-8 w-auto sm:w-[26rem] max-h-[calc(85dvh-1.5rem)] sm:max-h-[calc(100dvh-1.5rem)] rounded-2xl border border-white/[0.1] bg-[#111118]/95 backdrop-blur-xl shadow-2xl shadow-black/40 overflow-hidden flex flex-col"
+            id="chatbot-window"
+          >
           {/* Header */}
           <div className="flex items-center justify-between px-5 py-4 border-b border-white/[0.06] bg-gradient-to-r from-indigo-500/10 to-violet-500/10 flex-shrink-0">
             <div className="flex items-center gap-3">
@@ -219,6 +224,7 @@ export default function Chatbot() {
             </div>
           </div>
         </div>
+      </>
       )}
     </>
   );

@@ -24,7 +24,7 @@ export default function About() {
               {personal.about}
             </p>
 
-            <div className="grid grid-cols-1 min-[420px]:grid-cols-2 gap-3 sm:gap-4 mt-7 sm:mt-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mt-7 sm:mt-10">
               {[
                 { label: "Location", value: personal.location },
                 { label: "Email", value: personal.email },

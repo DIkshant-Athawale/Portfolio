@@ -41,32 +41,37 @@ export default function GitHubGraph() {
         <span className="text-[10px] text-white/30 min-[380px]:ml-auto">Last 12 months</span>
       </div>
 
-      {/* Month labels */}
-      <div className="hidden sm:flex gap-0 mb-2">
-        {MONTHS.map((m) => (
-          <span
-            key={m}
-            className="text-[10px] text-white/25"
-            style={{ width: `${100 / 12}%` }}
-          >
-            {m}
-          </span>
-        ))}
-      </div>
-
-      {/* Graph grid — plain divs, no per-cell Framer Motion */}
-      <div className="flex justify-between gap-[2px] sm:gap-[3px]">
-        {CONTRIBUTION_DATA.map((week, wi) => (
-          <div key={wi} className="hidden odd:flex sm:flex flex-col gap-[2px] sm:gap-[3px]">
-            {week.map((level, di) => (
-              <div
-                key={di}
-                className={`w-2 h-2 sm:w-[10px] sm:h-[10px] rounded-[2px] ${COLOR_MAP[level]} transition-colors hover:ring-1 hover:ring-white/20`}
-                aria-hidden="true"
-              />
+      {/* Scrollable container for graph and months */}
+      <div className="overflow-x-auto pb-2 scrollbar-thin">
+        <div className="min-w-[530px] md:min-w-0">
+          {/* Month labels */}
+          <div className="flex gap-0 mb-2">
+            {MONTHS.map((m) => (
+              <span
+                key={m}
+                className="text-[10px] text-white/25"
+                style={{ width: `${100 / 12}%` }}
+              >
+                {m}
+              </span>
             ))}
           </div>
-        ))}
+
+          {/* Graph grid — plain divs, no per-cell Framer Motion */}
+          <div className="flex justify-between gap-[2px] sm:gap-[3px]">
+            {CONTRIBUTION_DATA.map((week, wi) => (
+              <div key={wi} className="flex flex-col gap-[2px] sm:gap-[3px]">
+                {week.map((level, di) => (
+                  <div
+                    key={di}
+                    className={`w-2 h-2 sm:w-[10px] sm:h-[10px] rounded-[2px] ${COLOR_MAP[level]} transition-colors hover:ring-1 hover:ring-white/20`}
+                    aria-hidden="true"
+                  />
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* Legend */}
